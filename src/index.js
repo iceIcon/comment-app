@@ -3,4 +3,4 @@ import ReactDOM from 'react-dom'
 import CommentApp from './CommentApp.js'
 import './index.css'
 
-ReactDOM.render(<CommentApp />,document.body)
+ReactDOM.render(<CommentApp />,document.getElementById('root'))

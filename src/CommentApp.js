@@ -6,13 +6,23 @@ class CommentApp extends Component {
  state = {
      comment:[]
  }
+ componentWillMount(){
+     let comment = localStorage.getItem('content');
+     if(comment) {
+         comment = JSON.parse(comment);
+         this.setState({comment});
+     }
+ }
   render() {
     return (
         <div className="wrapper">
             <CommentInput onSubmit={this.handleChange.bind(this)} />
-            <CommentList comment={this.state.comment}/>
+            <CommentList comment={this.state.comment} doDeleteComment={this.handleDeleteComment.bind(this)}/>
         </div>
     )
+  }
+  _saveContent() {
+      localStorage.setItem('content',JSON.stringify(this.state.comment))
   }
   handleChange(e) {
     if(!e) return;
@@ -28,6 +38,14 @@ class CommentApp extends Component {
     this.setState({
         comment: this.state.comment
     })
+    this._saveContent();
+  }
+  handleDeleteComment(index){
+      this.state.comment.splice(index,1);
+      this.setState({
+          comment:this.state.comment
+      })
+      this._saveContent()
   }
 }
 
